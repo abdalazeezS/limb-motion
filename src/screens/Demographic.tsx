@@ -15,7 +15,7 @@ const Demographic = ({ route }: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = (data: any) => {
     setIsSubmitting(true);
     const updatedInfo: any = {};
     for (const [key, value] of Object.entries(data)) {
@@ -28,7 +28,7 @@ const Demographic = ({ route }: any) => {
     }
     delete updatedInfo['pre_dash'];
     delete updatedInfo['post_dash'];
-    await updateDoc(doc(db, FIREBASE_COLLECTIONS.DEMOGRAPHIC_INFO, route.params.id), { ...updatedInfo })
+    updateDoc(doc(db, FIREBASE_COLLECTIONS.DEMOGRAPHIC_INFO, route.params.id), { ...updatedInfo })
       .then(() => {
         setIsSubmitting(false);
         Alert.alert('Updated Successfully ✅');

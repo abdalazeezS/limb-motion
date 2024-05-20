@@ -11,7 +11,7 @@ const PostDash = ({ route }: any) => {
 
   const { isLoading, isSubmitting, questions, setIsSubmitting, setQuestions } = useFetchDashData('postDash', route.params.id)
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setIsSubmitting(true)
     const updatedAnswers = questions.reduce((acc, q) => {
       //@ts-ignore
@@ -19,7 +19,7 @@ const PostDash = ({ route }: any) => {
       return acc;
     }, {});
 
-    await setDoc(doc(db, FIREBASE_COLLECTIONS.POST_DASH, route.params.id), { ...updatedAnswers })
+    setDoc(doc(db, FIREBASE_COLLECTIONS.POST_DASH, route.params.id), { ...updatedAnswers })
       .then(() => {
         setIsSubmitting(false)
         Alert.alert('Updated Successfully ✅')

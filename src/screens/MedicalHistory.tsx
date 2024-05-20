@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { useForm } from 'react-hook-form'
 import { Button, TextInput } from 'react-native-paper'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
@@ -19,7 +19,11 @@ const MedicalHistory = ({ route }: any) => {
     setIsSubmitting(true);
     const updateInfo: any = {};
 
-    await updateDoc(doc(db, FIREBASE_COLLECTIONS.MEDICAL_HISTORY, route.params.id), { ...updateInfo })
+    updateDoc(doc(db, FIREBASE_COLLECTIONS.MEDICAL_HISTORY, route.params.id), { ...updateInfo })
+    .then(() => {
+      setIsSubmitting(false)
+      Alert.alert('Updated Successfully ✅')
+    })
   }
 
 

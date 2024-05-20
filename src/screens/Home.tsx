@@ -4,11 +4,13 @@ import PatientCard from '../components/PatientCard'
 import { Button, Dialog, FAB, Portal, TextInput } from 'react-native-paper'
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/firebase'
+import Spinner from '../components/Spinner';
 
 const Home = ({ navigation }: any) => {
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState('');
   const [patients, setPatients] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const hideDialog = () => setVisible(false);
   useEffect(() => {
@@ -18,10 +20,15 @@ const Home = ({ navigation }: any) => {
       querySnapshot.forEach(doc => {
         result.push({ id: doc.id, ...doc.data() })
       })
-      setPatients(result)
+      setPatients(result);
+      setIsLoading(false);
     }
     fetchData()
   }, []);
+
+  if (isLoading) {
+    return <Spinner />
+  }
   return (
     <>
       <Portal>

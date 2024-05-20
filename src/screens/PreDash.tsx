@@ -5,11 +5,12 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections';
 import useFetchDashData from '../hooks/useFetchDashData';
+import Spinner from '../components/Spinner';
 
 const PreDash = ({ route }: any) => {
   const { isLoading, isSubmitting, questions, setIsSubmitting, setQuestions } = useFetchDashData('preDash', route.params.id);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setIsSubmitting(true);
     const updatedAnswers = questions.reduce((acc, q) => {
       //@ts-ignore
@@ -17,7 +18,7 @@ const PreDash = ({ route }: any) => {
       return acc;
     }, {});
 
-    await setDoc(doc(db, FIREBASE_COLLECTIONS.PRE_DASH, route.params.id), { ...updatedAnswers })
+    setDoc(doc(db, FIREBASE_COLLECTIONS.PRE_DASH, route.params.id), { ...updatedAnswers })
       .then(() => {
         setIsSubmitting(false);
         Alert.alert('Updated Successfully ✅')
@@ -25,7 +26,7 @@ const PreDash = ({ route }: any) => {
   }
 
   if (isLoading) {
-    return
+    return <Spinner />
   }
 
   return (
