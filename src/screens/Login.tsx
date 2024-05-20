@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import { login } from '../firebase/auth';
+import { Button } from 'react-native-paper';
 
 const Login = ({ navigation }: any) => {
   const { t } = useTranslation();
@@ -12,7 +12,7 @@ const Login = ({ navigation }: any) => {
   const onSubmit = () => {
     login(email, password)
       .then(res => {
-        navigation.navigate('Home')
+        navigation.navigate('Home');
       }).catch(err => {
         console.log(err)
       })
@@ -23,20 +23,19 @@ const Login = ({ navigation }: any) => {
       <Text style={styles.loginTitle}>{t('LOGIN')}</Text>
       <TextInput
         style={styles.textInput}
-        textAlign='right'
-        placeholder={t('EMAIL')}
+        placeholder='Email'
         onChangeText={setEmail}
         keyboardType='email-address'
       />
       <TextInput
         style={styles.textInput}
-        textAlign='right'
-        placeholder={t('PASSWORD')}
+        placeholder='Password'
         onChangeText={setPassword}
+        secureTextEntry
       />
-      <Pressable style={styles.loginBtn} onPress={onSubmit}>
-        <Text style={styles.loginBtnText}>{t('LOGIN')}</Text>
-      </Pressable>
+      <Button style={styles.loginBtn} mode='contained' onPress={onSubmit}>
+        Login
+      </Button>
     </View>
   )
 }
@@ -55,8 +54,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     width: '100%',
     paddingVertical: 16,
-    direction: 'rtl',
-    writingDirection: 'rtl',
     marginBottom: 8
   },
   loginTitle: {
@@ -70,15 +67,14 @@ const styles = StyleSheet.create({
   },
   loginBtnText: {
     color: 'white',
-    fontSize: 20
+    fontSize: 18,
+    width: '100%'
   },
   loginBtn: {
-    backgroundColor: Colors.primary,
-    paddingVertical: 20,
+    paddingVertical: 6,
     width: '100%',
     display: 'flex',
-    alignItems: 'center',
-    borderRadius: 6
+    borderRadius: 6,
   }
 });
 

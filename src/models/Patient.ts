@@ -5,4 +5,5 @@ export interface Patient {
   disabilityPercent: number;
   pre_dash: DocumentReference;
   post_dash: DocumentReference;
+  medical_history: DocumentReference;
 }

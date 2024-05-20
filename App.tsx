@@ -8,6 +8,7 @@ import { Provider } from 'react-native-paper';
 import Demographic from './src/screens/Demographic';
 import PreDash from './src/screens/PreDash';
 import PostDash from './src/screens/PostDash';
+import MedicalHistory from './src/screens/MedicalHistory';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,7 @@ export default function App() {
   return (
     <Provider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName={'Login'}>
           <Stack.Screen
             name="Home"
             component={Home}
@@ -26,31 +27,39 @@ export default function App() {
             }}
           />
           <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{
+              header: () => null,
+            }}
+          />
+
+          <Stack.Screen
             name="Demographic"
             component={Demographic}
             options={{
-              headerTitle: t('DEMOGRAPHIC'),
+              headerTitle: t('Demographic Info'),
             }}
           />
           <Stack.Screen
             name="PreDash"
             component={PreDash}
             options={{
-              headerTitle: t('PREDASH'),
+              headerTitle: t('Pre Dash'),
             }}
           />
           <Stack.Screen
             name="PostDash"
             component={PostDash}
             options={{
-              headerTitle: t('POSTDASH'),
+              headerTitle: t('Post Dash'),
             }}
           />
           <Stack.Screen
-            name="Login"
-            component={Login}
+            name="MedicalHistory"
+            component={MedicalHistory}
             options={{
-              header: () => null,
+              headerTitle: t('Medical History'),
             }}
           />
         </Stack.Navigator>
