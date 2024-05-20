@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import { useForm } from 'react-hook-form'
-import { ActivityIndicator, Button, TextInput } from 'react-native-paper'
+import { Button, TextInput } from 'react-native-paper'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase/firebase'
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections'
+import { MEDICAL_HISTORY_FIELDS } from '../constants/medical-history-fields'
+import Spinner from '../components/Spinner'
+import { globalStyles } from '../styles/globalStyles'
 
 const MedicalHistory = ({ route }: any) => {
   const { control, handleSubmit, formState: { errors }, setValue } = useForm();
@@ -36,181 +39,34 @@ const MedicalHistory = ({ route }: any) => {
   }, []);
 
   if (isLoading) {
-    return <View style={styles.loadingContainer}>
-      <ActivityIndicator animating size='large' />
-    </View>
+    return <Spinner />
   }
   return (
-    <View style={styles.pageWrapper}>
-      <View style={styles.demographic}>
-        <Controller
-          name='stroke_date'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              mode='outlined'
-              label='Stroke Date'
+    <View style={globalStyles.pageWrapper}>
+      <View style={globalStyles.pageContent}>
+        {
+          MEDICAL_HISTORY_FIELDS.map(field => {
+            return <Controller
+              key={field.name}
+              name={field.name}
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => {
+                return <TextInput
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  mode='outlined'
+                  label={field.label}
+                />
+              }}
             />
-          }}
-        />
-        <Controller
-          name='previous_injuries'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              mode='outlined'
-              label='Previous Injuries'
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
-          }}
-        />
-        <Controller
-          name='affected_side'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              mode='outlined'
-              label='Affected Side'
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
-          }}
-        />
-        <Controller
-          name='rehabilitation_treatments'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              mode='outlined'
-              label='Rehabilitation Treatments'
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
-          }}
-        />
-        <Controller
-          name='assistive_devices'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              mode='outlined'
-              label='Assistive Devices'
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
-          }}
-        />
-        <Controller
-          name='medications'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              mode='outlined'
-              label='Medications'
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
-          }}
-        />
-        <Controller
-          name='smoker'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              mode='outlined'
-              label='Smoker'
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
-          }}
-        />
-        <Controller
-          name='chronic_diseases'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              mode='outlined'
-              label='Chronic Diseases'
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
-          }}
-        />
-        <Controller
-          name='previous_surgeries'
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return <TextInput
-              mode='outlined'
-              label='Previous Surgeries'
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
-          }}
-        />
+          })
+        }
 
         <Button mode='contained' onPress={handleSubmit(onSubmit)}>{isSubmitting ? 'Submitting ...' : 'Submit'}</Button>
       </View>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  demographic: {
-    display: 'flex',
-    gap: 8
-  },
-  loadingContainer: {
-    display: 'flex',
-    height: '100%',
-    justifyContent: 'center'
-  },
-  pageWrapper: {
-    padding: 16
-  },
-  title: {
-    fontSize: 16,
-    marginBottom: 12
-  },
-  option: {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    marginBottom: 4,
-    borderRadius: 999,
-    width: 60,
-    height: 60,
-    padding: 10,
-  },
-  genderOption: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    marginBottom: 4,
-    borderRadius: 999,
-    width: 70,
-    height: 70,
-    padding: 10,
-  },
-  optionsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingHorizontal: 20
-  }
-})
 
 export default MedicalHistory

@@ -9,7 +9,7 @@ const Home = ({ navigation }: any) => {
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState('');
   const [patients, setPatients] = useState<any[]>([]);
-  
+
   const hideDialog = () => setVisible(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -47,12 +47,14 @@ const Home = ({ navigation }: any) => {
         style={styles.fab}
         onPress={() => setVisible(true)}
       />
-      {patients.map(patient => {
-        return <PatientCard
-          key={patient.name}
-          patient={patient}
-          navigation={navigation} />
-      })}
+      {
+        patients.map(patient => {
+          return <PatientCard
+            key={patient.name}
+            patient={patient}
+            navigation={navigation} />
+        })
+      }
     </>
   )
 }

@@ -1,34 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { ActivityIndicator, Button, RadioButton } from 'react-native-paper';
-import { questionsList } from '../constants/questions';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { Button, RadioButton } from 'react-native-paper';
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections';
+import useFetchDashData from '../hooks/useFetchDashData';
+import Spinner from '../components/Spinner';
 
 const PostDash = ({ route }: any) => {
-  const [questions, setQuestions] = useState(questionsList);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    const getPostDash = async () => {
-      const docRef = doc(db, FIREBASE_COLLECTIONS.POST_DASH, route.params.id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const docData = Object.entries(docSnap.data());
-        setQuestions(prev => {
-          return prev.map(q => {
-            const question = docData.find(item => item[0] == q.id);
-            return { ...q, answer: question?.[1] + '' };
-          })
-        })
-        setIsLoading(false);
-      }
-    }
-
-    getPostDash();
-  }, []);
+  const { isLoading, isSubmitting, questions, setIsSubmitting, setQuestions } = useFetchDashData('postDash', route.params.id)
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
@@ -46,9 +27,7 @@ const PostDash = ({ route }: any) => {
   }
 
   if (isLoading) {
-    return <View style={styles.loadingContainer}>
-      <ActivityIndicator animating size='large' />
-    </View>
+    return <Spinner />
   }
   return (
     <View style={styles.pageWrapper}>
@@ -63,7 +42,8 @@ const PostDash = ({ route }: any) => {
                   setQuestions(prev => {
                     return prev.map(question => question.id == q.id ? { ...question, answer: val } : question)
                   })
-                }}>
+                }}
+              >
                 <View style={styles.optionsContainer}>
                   <View style={styles.option}>
                     <Text>1</Text>
@@ -110,11 +90,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     display: 'flex',
     gap: 8
-  },
-  loadingContainer: {
-    display: 'flex',
-    height: '100%',
-    justifyContent: 'center'
   },
   pageWrapper: {
     padding: 16

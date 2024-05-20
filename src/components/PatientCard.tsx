@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native'
 import { Patient } from '../models/Patient'
 import { useTranslation } from 'react-i18next'
 
@@ -29,6 +29,14 @@ const PatientCard = ({ patient, navigation }: { patient: Patient, navigation: an
   )
 }
 
+const btnBase: StyleProp<TextStyle> = {
+  padding: 10,
+  borderRadius: 6,
+  color: 'white',
+  width: 160,
+  textAlign: 'center'
+}
+
 const styles = StyleSheet.create({
   bottomActionsContainer: {
     display: 'flex',
@@ -39,40 +47,24 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   demographic: {
-    padding: 10,
-    borderRadius: 6,
-    backgroundColor: '#dc3545',
-    color: 'white',
-    width: 160
+    ...btnBase,
+    backgroundColor: '#dc3545'
   },
   medicalHistory: {
-    padding: 10,
-    borderRadius: 6,
-    backgroundColor: '#D2649A',
-    color: 'white',
-    width: 160,
-    textAlign: 'center'
+    ...btnBase,
+    backgroundColor: '#D2649A'
   },
   preDash: {
-    padding: 10,
-    borderRadius: 6,
-    backgroundColor: '#fd7e14',
-    color: 'white',
-    width: 160,
-    textAlign: 'center'
+    ...btnBase,
+    backgroundColor: '#fd7e14'
   },
   postDash: {
-    padding: 10,
-    borderRadius: 6,
-    backgroundColor: '#198754',
-    color: 'white',
-    width: 160,
-    textAlign: 'center'
+    ...btnBase,
+    backgroundColor: '#198754'
   },
   cartContainer: {
     display: 'flex',
     marginBottom: 8,
-    // flexDirection: 'row-reverse',
     padding: 20,
     backgroundColor: 'white',
     borderRadius: 6

@@ -1,34 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { ActivityIndicator, Button, RadioButton } from 'react-native-paper';
-import { questionsList } from '../constants/questions';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { Button, RadioButton } from 'react-native-paper';
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections';
+import useFetchDashData from '../hooks/useFetchDashData';
 
 const PreDash = ({ route }: any) => {
-  const [questions, setQuestions] = useState(questionsList);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    const getPreDash = async () => {
-      const docRef = doc(db, FIREBASE_COLLECTIONS.PRE_DASH, route.params.id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const docData = Object.entries(docSnap.data());
-        setQuestions(prev => {
-          return prev.map(q => {
-            const question = docData.find(item => item[0] == q.id);
-            return { ...q, answer: question?.[1] + '' };
-          })
-        })
-        setIsLoading(false);
-      }
-    }
-
-    getPreDash();
-  }, []);
+  const { isLoading, isSubmitting, questions, setIsSubmitting, setQuestions } = useFetchDashData('preDash', route.params.id);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -46,9 +25,7 @@ const PreDash = ({ route }: any) => {
   }
 
   if (isLoading) {
-    return <View style={styles.loadingContainer}>
-      <ActivityIndicator animating size='large' />
-    </View>
+    return
   }
 
   return (
@@ -106,11 +83,6 @@ const styles = StyleSheet.create({
   },
   questionText: {
     fontSize: 16
-  },
-  loadingContainer: {
-    display: 'flex',
-    height: '100%',
-    justifyContent: 'center'
   },
   questionContainer: {
     marginBottom: 16,

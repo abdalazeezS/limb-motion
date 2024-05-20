@@ -1,11 +1,12 @@
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
-import { Alert, StyleSheet, Text, View } from 'react-native'
-
-import { ActivityIndicator, Button, RadioButton, TextInput } from 'react-native-paper';
+import { Alert, Text, View } from 'react-native'
+import { Button, RadioButton, TextInput } from 'react-native-paper';
 import { db } from '../firebase/firebase';
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections';
+import Spinner from '../components/Spinner';
+import { globalStyles } from '../styles/globalStyles';
 
 const Demographic = ({ route }: any) => {
   const [gender, setGender] = useState('');
@@ -53,13 +54,11 @@ const Demographic = ({ route }: any) => {
 
 
   if (isLoading) {
-    return <View style={styles.loadingContainer}>
-      <ActivityIndicator animating size='large' />
-    </View>
+    return <Spinner />
   }
   return (
-    <View style={styles.pageWrapper}>
-      <View style={styles.demographic}>
+    <View style={globalStyles.pageWrapper}>
+      <View style={globalStyles.pageContent}>
         <Controller
           name='name'
           control={control}
@@ -90,12 +89,12 @@ const Demographic = ({ route }: any) => {
           }}
         />
         <RadioButton.Group value={gender} onValueChange={(val) => setGender(val)}>
-          <View style={styles.optionsContainer}>
-            <View style={styles.genderOption}>
+          <View style={globalStyles.optionsContainer}>
+            <View style={globalStyles.genderOption}>
               <Text>Male</Text>
               <RadioButton value='male' />
             </View>
-            <View style={styles.genderOption}>
+            <View style={globalStyles.genderOption}>
               <Text>Female</Text>
               <RadioButton value='female' />
             </View>
@@ -162,12 +161,12 @@ const Demographic = ({ route }: any) => {
           }}
         />
         <RadioButton.Group value={maritalStatus} onValueChange={(val) => setMaritalStatus(val)}>
-          <View style={styles.optionsContainer}>
-            <View style={styles.genderOption}>
+          <View style={globalStyles.optionsContainer}>
+            <View style={globalStyles.genderOption}>
               <Text>Single</Text>
               <RadioButton value='single' />
             </View>
-            <View style={styles.genderOption}>
+            <View style={globalStyles.genderOption}>
               <Text>Married</Text>
               <RadioButton value='married' />
             </View>
@@ -183,50 +182,4 @@ const Demographic = ({ route }: any) => {
   )
 }
 
-
-const styles = StyleSheet.create({
-  demographic: {
-    display: 'flex',
-    gap: 8
-  },
-  loadingContainer: {
-    display: 'flex',
-    height: '100%',
-    justifyContent: 'center'
-  },
-  pageWrapper: {
-    padding: 16
-  },
-  title: {
-    fontSize: 16,
-    marginBottom: 12
-  },
-  option: {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    marginBottom: 4,
-    borderRadius: 999,
-    width: 60,
-    height: 60,
-    padding: 10,
-  },
-  genderOption: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    marginBottom: 4,
-    borderRadius: 999,
-    width: 70,
-    height: 70,
-    padding: 10,
-  },
-  optionsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingHorizontal: 20
-  }
-})
 export default Demographic
