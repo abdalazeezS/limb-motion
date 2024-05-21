@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet } from 'react-native'
+import { Alert, StyleSheet } from 'react-native'
 import PatientCard from '../components/PatientCard'
 import { Button, Dialog, FAB, Portal, TextInput } from 'react-native-paper'
-import { collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/firebase'
 import Spinner from '../components/Spinner';
+import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections';
+import { Dash } from '../models/dash';
+import { MedicalHistory } from '../models/medical-history.model';
+import { DemographicInformation } from '../models/demographic-information.model';
 
 const Home = ({ navigation }: any) => {
   const [visible, setVisible] = useState(false);
@@ -24,8 +28,35 @@ const Home = ({ navigation }: any) => {
       setIsLoading(false);
     }
     fetchData()
-  }, []);
+  }, [visible]);
 
+  const handleCloseDialog = () => {
+    setName('');
+    setVisible(false)
+  }
+
+  const handleAddPatient = async () => {
+    const dashObj = new Dash();
+    const medicalHistoryObj = new MedicalHistory();
+    const demographicObj = new DemographicInformation();
+
+    const preDashDocRef = await addDoc(collection(db, FIREBASE_COLLECTIONS.PRE_DASH), { ...dashObj });
+    const postDashDocRef = await addDoc(collection(db, FIREBASE_COLLECTIONS.POST_DASH), { ...dashObj });
+    const medicalHistoryDocRef = await addDoc(collection(db, FIREBASE_COLLECTIONS.MEDICAL_HISTORY), { ...medicalHistoryObj })
+    await addDoc(collection(db, FIREBASE_COLLECTIONS.DEMOGRAPHIC_INFO),
+      {
+        ...demographicObj,
+        name,
+        pre_dash: preDashDocRef,
+        post_dash: postDashDocRef,
+        medical_history: medicalHistoryDocRef
+      }).then(() => {
+        handleCloseDialog();
+        Alert.alert('Patient added successfully ✅');
+      }).catch(() => {
+        Alert.alert('Something went wrong')
+      })
+  }
   if (isLoading) {
     return <Spinner />
   }
@@ -41,11 +72,8 @@ const Home = ({ navigation }: any) => {
             />
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => { setName(''); setVisible(false) }}>Cancel</Button>
-            <Button onPress={() => {
-              patients.push({ id: 0, disabilityPercent: 0, name })
-              setVisible(false)
-            }}>Ok</Button>
+            <Button onPress={handleCloseDialog}>Cancel</Button>
+            <Button onPress={handleAddPatient}>Ok</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

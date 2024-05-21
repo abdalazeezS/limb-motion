@@ -1,0 +1,63 @@
+export class Dash {
+  q1: number;
+  q2: number;
+  q3: number;
+  q4: number;
+  q5: number;
+  q6: number;
+  q7: number;
+  q8: number;
+  q9: number;
+  q10: number;
+  q11: number;
+  q12: number;
+  q13: number;
+  q14: number;
+  q15: number;
+  q16: number;
+  q17: number;
+  q18: number;
+  q19: number;
+  q20: number;
+  q21: number;
+  q22: number;
+  q23: number;
+  q24: number;
+  q25: number;
+  q26: number;
+  q27: number;
+  q28: number;
+  q29: number;
+
+  constructor() {
+    this.q1 = -1;
+    this.q2 = -1;
+    this.q3 = -1;
+    this.q4 = -1;
+    this.q5 = -1;
+    this.q6 = -1;
+    this.q7 = -1;
+    this.q8 = -1;
+    this.q9 = -1;
+    this.q10 = -1;
+    this.q11 = -1;
+    this.q12 = -1;
+    this.q13 = -1;
+    this.q14 = -1;
+    this.q15 = -1;
+    this.q16 = -1;
+    this.q17 = -1;
+    this.q18 = -1;
+    this.q19 = -1;
+    this.q20 = -1;
+    this.q21 = -1;
+    this.q22 = -1;
+    this.q23 = -1;
+    this.q24 = -1;
+    this.q25 = -1;
+    this.q26 = -1;
+    this.q27 = -1;
+    this.q28 = -1;
+    this.q29 = -1;
+  }
+} 
