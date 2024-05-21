@@ -5,8 +5,8 @@ import { Alert, Text, View } from 'react-native'
 import { Button, RadioButton, TextInput } from 'react-native-paper';
 import { db } from '../firebase/firebase';
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections';
-import Spinner from '../components/Spinner';
 import { globalStyles } from '../styles/globalStyles';
+import { Spinner } from '../components';
 
 const Demographic = ({ route }: any) => {
   const [gender, setGender] = useState('');

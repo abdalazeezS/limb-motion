@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, StyleSheet } from 'react-native'
-import PatientCard from '../components/PatientCard'
 import { Button, Dialog, FAB, Portal, TextInput } from 'react-native-paper'
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/firebase'
-import Spinner from '../components/Spinner';
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections';
 import { Dash } from '../models/dash';
 import { MedicalHistory } from '../models/medical-history.model';
 import { DemographicInformation } from '../models/demographic-information.model';
+import { PatientCard, Spinner } from '../components';
 
 const Home = ({ navigation }: any) => {
   const [visible, setVisible] = useState(false);

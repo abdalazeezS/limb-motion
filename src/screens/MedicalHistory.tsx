@@ -7,8 +7,8 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase/firebase'
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections'
 import { MEDICAL_HISTORY_FIELDS } from '../constants/medical-history-fields'
-import Spinner from '../components/Spinner'
 import { globalStyles } from '../styles/globalStyles'
+import { Spinner } from '../components'
 
 const MedicalHistory = ({ route }: any) => {
   const { control, handleSubmit, formState: { errors }, setValue } = useForm();

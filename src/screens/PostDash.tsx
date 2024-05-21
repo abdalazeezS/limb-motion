@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { FIREBASE_COLLECTIONS } from '../constants/firebase-collections';
 import useFetchDashData from '../hooks/useFetchDashData';
-import Spinner from '../components/Spinner';
+import { Divider, QuestionsOptions, QuestionsSection, Spinner } from '../components';
 
 const PostDash = ({ route }: any) => {
 
@@ -32,8 +32,19 @@ const PostDash = ({ route }: any) => {
   return (
     <View style={styles.pageWrapper}>
       <ScrollView>
+        <QuestionsSection
+          title='Section One'
+          subTitle='Points Weights'
+          questionsWeights={[
+            'No Difficulty',
+            'Mild Difficulty',
+            'Moderate Difficulty',
+            'Severe Difficulty',
+            'Unable',
+          ]}
+        />
         {
-          questions.map(q => {
+          questions.filter(q => q.sectionId == 1).map(q => {
             return <View key={q.id} style={styles.questionContainer}>
               <Text style={styles.questionText}>{q.text}</Text>
               <RadioButton.Group
@@ -42,38 +53,162 @@ const PostDash = ({ route }: any) => {
                   setQuestions(prev => {
                     return prev.map(question => question.id == q.id ? { ...question, answer: val } : question)
                   })
-                }}
-              >
-                <View style={styles.optionsContainer}>
-                  <View style={styles.option}>
-                    <Text>1</Text>
-                    <View>
-                      <RadioButton value='1' />
-                    </View>
-                  </View>
-                  <View style={styles.option}>
-                    <Text>2</Text>
-                    <RadioButton value='2' />
-                  </View>
-                  <View style={styles.option}>
-                    <Text>3</Text>
-                    <RadioButton value='3' />
-                  </View>
-                  <View style={styles.option}>
-                    <Text>4</Text>
-                    <RadioButton value='4' />
-                  </View>
-                  <View style={styles.option}>
-                    <Text>5</Text>
-                    <RadioButton value='5' />
-                  </View>
-                </View>
+                }}>
+                <QuestionsOptions />
+              </RadioButton.Group>
+            </View>
+          })
+        }
+        <Divider />
+        <QuestionsSection
+          title='Section Tow'
+          subTitle='Points Weights'
+          questionsWeights={[
+            'Not at all',
+            'Slightly',
+            'Moderately',
+            'Quite a bit',
+            'Extremely',
+          ]}
+        />
+
+        {
+          questions.filter(q => q.sectionId == 2).map(q => {
+            return <View key={q.id} style={styles.questionContainer}>
+              <Text style={styles.questionText}>{q.text}</Text>
+              <RadioButton.Group
+                value={questions.find(question => question.id == q.id)?.answer!}
+                onValueChange={(val) => {
+                  setQuestions(prev => {
+                    return prev.map(question => question.id == q.id ? { ...question, answer: val } : question)
+                  })
+                }}>
+                <QuestionsOptions />
+              </RadioButton.Group>
+            </View>
+          })
+        }
+        <Divider />
+        <QuestionsSection
+          title='Section Three'
+          subTitle='Points Weights'
+          questionsWeights={[
+            'Not limited at all',
+            'Slightly limited',
+            'Moderately limited',
+            'Very limited',
+            'Unable',
+          ]}
+        />
+        {
+          questions.filter(q => q.sectionId == 3).map(q => {
+            return <View key={q.id} style={styles.questionContainer}>
+              <Text style={styles.questionText}>{q.text}</Text>
+              <RadioButton.Group
+                value={questions.find(question => question.id == q.id)?.answer!}
+                onValueChange={(val) => {
+                  setQuestions(prev => {
+                    return prev.map(question => question.id == q.id ? { ...question, answer: val } : question)
+                  })
+                }}>
+                <QuestionsOptions />
+              </RadioButton.Group>
+            </View>
+          })
+        }
+        <Divider />
+        <QuestionsSection
+          title='Section Four'
+          subTitle='Points Weights'
+          questionsWeights={[
+            'None',
+            'Mild',
+            'Moderate',
+            'Severe',
+            'Extreme',
+          ]}
+        />
+        {
+          questions.filter(q => q.sectionId == 4).map(q => {
+            return <View key={q.id} style={styles.questionContainer}>
+              <Text style={styles.questionText}>{q.text}</Text>
+              <RadioButton.Group
+                value={questions.find(question => question.id == q.id)?.answer!}
+                onValueChange={(val) => {
+                  setQuestions(prev => {
+                    return prev.map(question => question.id == q.id ? { ...question, answer: val } : question)
+                  })
+                }}>
+                <QuestionsOptions />
+              </RadioButton.Group>
+            </View>
+          })
+        }
+        <Divider />
+
+        <QuestionsSection
+          title='Section Five'
+          subTitle='Points Weights'
+          questionsWeights={[
+            'No Difficulty',
+            'Mild Difficulty',
+            'Moderate Difficulty',
+            'Severe Difficulty',
+            'So much difficulty that I can\'t sleep',
+          ]}
+        />
+        {
+          questions.filter(q => q.sectionId == 5).map(q => {
+            return <View key={q.id} style={styles.questionContainer}>
+              <Text style={styles.questionText}>{q.text}</Text>
+              <RadioButton.Group
+                value={questions.find(question => question.id == q.id)?.answer!}
+                onValueChange={(val) => {
+                  setQuestions(prev => {
+                    return prev.map(question => question.id == q.id ? { ...question, answer: val } : question)
+                  })
+                }}>
+                <QuestionsOptions />
+              </RadioButton.Group>
+            </View>
+          })
+        }
+        <Divider />
+
+        <QuestionsSection
+          title='Section Six'
+          subTitle='Points Weights'
+          questionsWeights={[
+            'Strongly disagree',
+            'Disagree',
+            'Neither agree nor disagree',
+            'Agree',
+            'Strongly agree',
+          ]}
+        />
+        {
+          questions.filter(q => q.sectionId == 6).map(q => {
+            return <View key={q.id} style={styles.questionContainer}>
+              <Text style={styles.questionText}>{q.text}</Text>
+              <RadioButton.Group
+                value={questions.find(question => question.id == q.id)?.answer!}
+                onValueChange={(val) => {
+                  setQuestions(prev => {
+                    return prev.map(question => question.id == q.id ? { ...question, answer: val } : question)
+                  })
+                }}>
+                <QuestionsOptions />
               </RadioButton.Group>
             </View>
           })
         }
       </ScrollView>
-      <Button onPress={handleSubmit} style={styles.submitBtn} mode='contained'>{isSubmitting ? 'Submitting ...' : 'Submit'}</Button>
+      <Button
+        style={styles.submitBtn}
+        onPress={handleSubmit}
+        mode='contained'>
+        {isSubmitting ? 'Submitting ...' : 'Submit'}
+      </Button>
     </View>
   )
 }
@@ -92,17 +227,9 @@ const styles = StyleSheet.create({
     gap: 8
   },
   pageWrapper: {
-    padding: 16
-  },
-  option: {
+    padding: 16,
     display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    marginBottom: 4,
-    borderRadius: 999,
-    width: 60,
-    height: 60,
-    padding: 10,
+    alignItems: 'center'
   },
   genderOption: {
     display: 'flex',
@@ -113,12 +240,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 60,
     padding: 10,
-  },
-  optionsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20
   }
 })
 export default PostDash
