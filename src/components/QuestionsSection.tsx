@@ -14,7 +14,7 @@ const QuestionsSection = ({ title, subTitle, questionsWeights }: QuestionsSectio
       <Text style={styles.sectionSubTitle}>{subTitle}:</Text>
       <Text>
         {questionsWeights.map(q => {
-          return <Text>{'\t'}1 -&gt; {q} {'\n'}</Text>
+          return <Text key={q}>{'\t'}1 -&gt; {q} {'\n'}</Text>
         })}
       </Text>
     </>

@@ -8,6 +8,7 @@ import { Dash } from '../models/dash';
 import { MedicalHistory } from '../models/medical-history.model';
 import { DemographicInformation } from '../models/demographic-information.model';
 import { PatientCard, Spinner } from '../components';
+import { globalStyles } from '../styles/globalStyles';
 
 const Home = ({ navigation }: any) => {
   const [visible, setVisible] = useState(false);
@@ -78,7 +79,7 @@ const Home = ({ navigation }: any) => {
       </Portal>
       <FAB
         icon='plus'
-        style={styles.fab}
+        style={globalStyles.fab}
         onPress={() => setVisible(true)}
       />
       {
@@ -92,14 +93,4 @@ const Home = ({ navigation }: any) => {
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0
-  }
-})
-
 export default Home

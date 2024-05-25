@@ -3,17 +3,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import './src/i18n/i18n';
 import Login from './src/screens/Login';
 import Home from './src/screens/Home';
-import { useTranslation } from 'react-i18next';
 import { Provider } from 'react-native-paper';
 import Demographic from './src/screens/Demographic';
 import PreDash from './src/screens/PreDash';
 import PostDash from './src/screens/PostDash';
 import MedicalHistory from './src/screens/MedicalHistory';
+import Sessions from './src/screens/Sessions';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const { t } = useTranslation();
   return (
     <Provider>
       <NavigationContainer>
@@ -22,7 +21,7 @@ export default function App() {
             name="Home"
             component={Home}
             options={{
-              headerTitle: t('PATIENTS'),
+              headerTitle: 'Patients',
               headerBackVisible: false
             }}
           />
@@ -38,28 +37,35 @@ export default function App() {
             name="Demographic"
             component={Demographic}
             options={{
-              headerTitle: t('Demographic Info'),
+              headerTitle: 'Demographic Info',
+            }}
+          />
+          <Stack.Screen
+            name="Sessions"
+            component={Sessions}
+            options={{
+              headerTitle: 'Sessions',
             }}
           />
           <Stack.Screen
             name="PreDash"
             component={PreDash}
             options={{
-              headerTitle: t('Pre Dash'),
+              headerTitle: 'Pre Dash',
             }}
           />
           <Stack.Screen
             name="PostDash"
             component={PostDash}
             options={{
-              headerTitle: t('Post Dash'),
+              headerTitle: 'Post Dash',
             }}
           />
           <Stack.Screen
             name="MedicalHistory"
             component={MedicalHistory}
             options={{
-              headerTitle: t('Medical History'),
+              headerTitle: 'Medical History',
             }}
           />
         </Stack.Navigator>

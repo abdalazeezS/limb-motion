@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import { login } from '../firebase/auth';
 import { Button } from 'react-native-paper';
 
 const Login = ({ navigation }: any) => {
-  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,7 +18,7 @@ const Login = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../../assets/logo.png')} />
-      <Text style={styles.loginTitle}>{t('LOGIN')}</Text>
+      <Text style={styles.loginTitle}>Login</Text>
       <TextInput
         style={styles.textInput}
         placeholder='Email'

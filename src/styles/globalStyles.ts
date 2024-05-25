@@ -35,4 +35,10 @@ export const globalStyles = StyleSheet.create({
     display: 'flex',
     gap: 8
   },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0
+  }
 })

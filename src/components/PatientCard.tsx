@@ -1,28 +1,29 @@
 import React from 'react'
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native'
 import { Patient } from '../models/Patient'
-import { useTranslation } from 'react-i18next'
 
 const PatientCard = ({ patient, navigation }: { patient: Patient, navigation: any }) => {
-  const { t } = useTranslation();
   return (
     <View style={styles.cartContainer}>
       <View style={styles.cardContent}>
         <Text style={styles.name}>{patient.name}</Text>
-        <Text>{t('DISABILITY_PERCENT')}: <Text style={styles.disabilityValue}>{patient.disabilityPercent}</Text>%</Text>
+        <Text>Disability Percent: <Text style={styles.disabilityValue}>{patient.disabilityPercent}</Text>%</Text>
       </View>
       <View style={styles.bottomActionsContainer}>
-        <Pressable onPress={() => navigation.navigate('Demographic', { id: patient.id })}>
-          <Text style={styles.demographic}>Demographic details</Text>
+        <Pressable style={styles.demographic} onPress={() => navigation.navigate('Demographic', { id: patient.id })}>
+          <Text style={styles.actionText}>Demographic details</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('PreDash', { id: patient.pre_dash.id })}>
-          <Text style={styles.preDash}>Pre Dash</Text>
+        <Pressable style={styles.preDash} onPress={() => navigation.navigate('PreDash', { id: patient.pre_dash.id })}>
+          <Text style={styles.actionText}>Pre Dash</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('PostDash', { id: patient.post_dash.id })}>
-          <Text style={styles.postDash}>Post Dash</Text>
+        <Pressable style={styles.postDash} onPress={() => navigation.navigate('PostDash', { id: patient.post_dash.id })}>
+          <Text style={styles.actionText}>Post Dash</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('MedicalHistory', { id: patient.medical_history.id })}>
-          <Text style={styles.medicalHistory}>Medical History</Text>
+        <Pressable style={styles.medicalHistory} onPress={() => navigation.navigate('MedicalHistory', { id: patient.medical_history.id })}>
+          <Text style={styles.actionText}>Medical History</Text>
+        </Pressable>
+        <Pressable style={styles.sessions} onPress={() => navigation.navigate('Sessions', { id: patient.id })}>
+          <Text style={styles.actionText}>Sessions</Text>
         </Pressable>
       </View>
     </View>
@@ -46,9 +47,17 @@ const styles = StyleSheet.create({
     gap: 8,
     flexWrap: 'wrap'
   },
+  actionText: {
+    color: 'white',
+    textAlign: 'center'
+  },
   demographic: {
     ...btnBase,
-    backgroundColor: '#dc3545'
+    backgroundColor: '#dc3545',
+  },
+  sessions: {
+    ...btnBase,
+    backgroundColor: '#6DC5D1',
   },
   medicalHistory: {
     ...btnBase,
@@ -71,7 +80,6 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     display: 'flex',
-    alignItems: 'flex-end',
     gap: 4
   },
   name: {
